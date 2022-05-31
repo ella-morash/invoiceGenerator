@@ -12,16 +12,28 @@ public class InvoiceController {
     private final InvoiceService service;
 
     public InvoiceController(InvoiceService service) {
+
         this.service = service;
     }
+
     @GetMapping(path = "/hello")
     public String hello(){
+
+
         return "Hello World";
     }
+
     @PostMapping(path = "/new")
+
     public Invoice createInvoice(@RequestBody Invoice invoice) {
 
         return service.createInvoice(invoice);
+
+    }
+    @GetMapping(path = "/get")
+    public Invoice getInvoice(Invoice invoice) {
+
+        return service.getInvoice(invoice);
 
     }
 }

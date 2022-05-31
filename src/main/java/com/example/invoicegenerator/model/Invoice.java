@@ -32,13 +32,13 @@ import java.time.ZoneId;
 })
 public class Invoice {
     @JsonProperty("full_name")
-    private final String full_name;
+    private final String fullName;
     @JsonProperty("tax_id")
-    private final String tax_id;
+    private final String taxId;
     @JsonProperty("bank_name")
-    private final String bank_name;
+    private final String bankName;
     @JsonProperty("card_holder")
-    private final String card_holder;
+    private final String cardHolder;
     @JsonProperty("iban")
     private final String iban;
     @JsonProperty("bic")
@@ -46,9 +46,9 @@ public class Invoice {
     @JsonProperty("email")
     private final String email;
     @JsonProperty("invoice_number")
-    private String invoice_number;
+    private String invoiceNumber;
     @JsonProperty("invoice_date")
-    private final String invoice_date = String.valueOf(LocalDate.now(
+    private final String invoiceDate = String.valueOf(LocalDate.now(
             ZoneId.of("America/Montreal")));
     @JsonProperty("description")
     private final String description;
@@ -65,10 +65,10 @@ public class Invoice {
     /**
      * Instantiates a new Invoice.
      *
-     * @param full_name   the full name
-     * @param tax_id      the tax id
-     * @param bank_name   the bank name
-     * @param card_holder the card holder
+     * @param fullName   the full name
+     * @param taxId      the tax id
+     * @param bankName   the bank name
+     * @param cardHolder the card holder
      * @param iban        the iban
      * @param bic         the bic
      * @param email       the email
@@ -78,13 +78,13 @@ public class Invoice {
      */
     public Invoice(
             @JsonProperty(value = "full_name", required = true)
-            String full_name,
+            String fullName,
             @JsonProperty(value = "tax_id", required = true)
-            String tax_id,
+            String taxId,
             @JsonProperty(value = "bank_name", required = true)
-            String bank_name,
+            String bankName,
             @JsonProperty(value = "card_holder", required = true)
-            String card_holder,
+            String cardHolder,
             @JsonProperty(value = "iban", required = true)
             String iban,
             @JsonProperty(value = "bic", required = true)
@@ -98,10 +98,10 @@ public class Invoice {
             @JsonProperty(value = "price", required = true)
             String price
     ) {
-        this.full_name = full_name;
-        this.tax_id = tax_id;
-        this.bank_name = bank_name;
-        this.card_holder = card_holder;
+        this.fullName = fullName;
+        this.taxId = taxId;
+        this.bankName = bankName;
+        this.cardHolder = cardHolder;
         this.iban = iban;
         this.bic = bic;
         this.email = email;
@@ -112,14 +112,16 @@ public class Invoice {
 
 
 
+
+
     /**
      * Gets full name.
      *
      * @return the full name
      */
     @JsonGetter
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
     /**
@@ -129,8 +131,8 @@ public class Invoice {
      */
 
     @JsonGetter
-    public String getTax_id() {
-        return tax_id;
+    public String getTaxId() {
+        return taxId;
     }
 
     /**
@@ -140,8 +142,8 @@ public class Invoice {
      */
 
     @JsonGetter
-    public String getBank_name() {
-        return bank_name;
+    public String getBankName() {
+        return bankName;
     }
 
     /**
@@ -151,8 +153,8 @@ public class Invoice {
      */
 
     @JsonGetter
-    public String getCard_holder() {
-        return card_holder;
+    public String getCardHolder() {
+        return cardHolder;
     }
 
     /**
@@ -195,8 +197,8 @@ public class Invoice {
      */
 
     @JsonGetter
-    public String getInvoice_number() {
-        return invoice_number;
+    public String getInvoiceNumber() {
+        return invoiceNumber;
     }
 
     /**
@@ -206,8 +208,8 @@ public class Invoice {
      */
 
     @JsonGetter
-    public String getInvoice_date() {
-        return invoice_date;
+    public String getInvoiceDate() {
+        return invoiceDate;
     }
 
     /**
@@ -271,8 +273,8 @@ public class Invoice {
      * @param invoice_number the invoice number
      */
     @JsonSetter
-    public void setInvoice_number(String invoice_number) {
-        this.invoice_number = invoice_number;
+    public void setInvoiceNumber(String invoice_number) {
+        this.invoiceNumber = invoice_number;
     }
 
     /**

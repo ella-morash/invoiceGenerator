@@ -10,7 +10,8 @@ import java.io.IOException;
 
 
 public class FileWriter {
-    private final String outPath = "C:\\telRan_projects\\invoicegenerator\\src\\main\\resources\\docx\\invoice.docx";
+
+    private  String outPath = "C:\\telRan_projects\\invoicegenerator\\src\\main\\resources\\docx\\";
 
 
     public void generateNewDocxFile(final Invoice invoice) throws IOException {
@@ -20,7 +21,7 @@ public class FileWriter {
         ReplacingFactory.replacePlaceholders(new ParagraphReplacement(), docxReader, map);
         ReplacingFactory.replacePlaceholders(new TableReplacement(), docxReader, map);
 
-        final FileOutputStream out = new FileOutputStream(outPath);
+        final FileOutputStream out = new FileOutputStream(outPath + invoice.getInvoice_number() + "docx");
         docxReader.getDocx().write(out);
         out.close();
         docxReader.getXWPFDocument().close();
