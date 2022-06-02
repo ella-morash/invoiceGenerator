@@ -1,17 +1,28 @@
 package com.example.invoicegenerator.service;
 
 import com.example.invoicegenerator.model.Invoice;
+
+
 import com.example.invoicegenerator.persistence.InvoiceRepo;
-import com.example.invoicegenerator.util.InvoiceConvertor;
+import com.example.invoicegenerator.storage.InvoiceStorageManager;
 import com.example.invoicegenerator.util.InvoiceNumberGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class InvoiceService {
+
     private final InvoiceRepo repo;
 
-    public InvoiceService(InvoiceRepo repo) {
+    private final InvoiceStorageManager storageManager;
+
+    @Autowired
+    public InvoiceService(InvoiceRepo repo, InvoiceStorageManager storageManager) {
         this.repo = repo;
+        this.storageManager = storageManager;
     }
 
     public Invoice createInvoice(Invoice invoice) {
@@ -27,13 +38,35 @@ public class InvoiceService {
         invoice.setTotal(invoice.getAmount());
        // convert invoice to entity
         //save to repo
-        repo.save(InvoiceConvertor.convertToEntity(invoice));
+        repo.save(invoice);
+
+        this.storageManager.store(invoice);
 
         return invoice;
 
     }
-    public Invoice getInvoice(Invoice invoice) {
-        return null;
+    public Invoice getInvoice(Long id) {
+
+        Optional<Invoice> invoiceEntity = this.repo.findById(id);
+        if (invoiceEntity.isEmpty()) {
+
+            throw new IllegalStateException("No invoice with such id");
+        }
+        Invoice res = invoiceEntity.get();
+
+        return res;
     }
 
+    @Transactional
+    public String editInvoice(Invoice invoice) {
+        boolean isExist = repo.existsById(invoice.getId());
+        if (!isExist) {
+            new IllegalStateException("There is no such invoice.Please create first");
+        }
+
+        repo.save(invoice);
+
+        return "";
+
+    }
 }

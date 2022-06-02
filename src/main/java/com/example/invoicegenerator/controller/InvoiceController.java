@@ -3,6 +3,7 @@ package com.example.invoicegenerator.controller;
 import com.example.invoicegenerator.model.Invoice;
 import com.example.invoicegenerator.service.InvoiceService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,29 +12,28 @@ public class InvoiceController {
 
     private final InvoiceService service;
 
+    @Autowired
     public InvoiceController(InvoiceService service) {
 
         this.service = service;
     }
 
-    @GetMapping(path = "/hello")
-    public String hello(){
 
 
-        return "Hello World";
-    }
-
-    @PostMapping(path = "/new")
-
+    @PostMapping(path = "/invoice")
     public Invoice createInvoice(@RequestBody Invoice invoice) {
 
         return service.createInvoice(invoice);
 
     }
-    @GetMapping(path = "/get")
-    public Invoice getInvoice(Invoice invoice) {
 
-        return service.getInvoice(invoice);
+    @GetMapping(path = "/invoice/{id}")
+    public Invoice getInvoice(@PathVariable Long id) {
 
+        return service.getInvoice(id);
+    }
+    @PutMapping(path = "/invoice/edit")
+    public String editInvoice(@RequestBody Invoice invoice) {
+        return service.editInvoice(invoice);
     }
 }

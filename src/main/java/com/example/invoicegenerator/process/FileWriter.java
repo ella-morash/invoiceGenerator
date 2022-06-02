@@ -21,7 +21,7 @@ public class FileWriter {
         ReplacingFactory.replacePlaceholders(new ParagraphReplacement(), docxReader, map);
         ReplacingFactory.replacePlaceholders(new TableReplacement(), docxReader, map);
 
-        final FileOutputStream out = new FileOutputStream(outPath + invoice.getInvoice_number() + "docx");
+        final FileOutputStream out = new FileOutputStream(outPath + invoice.getInvoiceNumber() + "docx");
         docxReader.getDocx().write(out);
         out.close();
         docxReader.getXWPFDocument().close();
