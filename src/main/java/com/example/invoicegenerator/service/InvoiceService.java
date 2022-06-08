@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -32,11 +34,12 @@ public class InvoiceService {
         }
         //generate invoice properties
         invoice.setInvoiceNumber(InvoiceNumberGenerator.generate(invoice));
+        invoice.setInvoiceDate(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         invoice.setAmount(
                 String.valueOf(
                         Integer.parseInt(invoice.getPrice()) * Integer.parseInt(invoice.getQuantity())));
         invoice.setTotal(invoice.getAmount());
-       // convert invoice to entity
+
         //save to repo
         repo.save(invoice);
 

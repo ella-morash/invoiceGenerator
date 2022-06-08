@@ -9,6 +9,6 @@ public class InvoiceNumberGenerator {
 
     public static String generate(Invoice invoice) {
 
-        return String.valueOf(Instant.now().getEpochSecond() + invoice.getFullName().hashCode());
+        return String.valueOf(Instant.now().getEpochSecond() + invoice.hashCode());
     }
 }

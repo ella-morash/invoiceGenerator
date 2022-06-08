@@ -1,9 +1,6 @@
 package com.example.invoicegenerator.model;
 
-
-
 import javax.persistence.*;
-
 
 @Entity
 @Table
@@ -39,8 +36,20 @@ public class Invoice {
     @Column(name = "total")
     private String total;
 
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
     public Invoice() {
 
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -154,4 +163,6 @@ public class Invoice {
     public void setTotal(String total) {
         this.total = total;
     }
+
+
 }

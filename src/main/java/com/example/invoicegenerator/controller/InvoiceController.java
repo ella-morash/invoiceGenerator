@@ -3,6 +3,7 @@ package com.example.invoicegenerator.controller;
 import com.example.invoicegenerator.model.Invoice;
 import com.example.invoicegenerator.service.InvoiceService;
 
+import com.example.invoicegenerator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import org.springframework.web.bind.annotation.*;
 public class InvoiceController {
 
     private final InvoiceService service;
+    private final UserService userService;
 
     @Autowired
-    public InvoiceController(InvoiceService service) {
+    public InvoiceController(InvoiceService service, UserService userService) {
 
         this.service = service;
+        this.userService = userService;
     }
 
 
