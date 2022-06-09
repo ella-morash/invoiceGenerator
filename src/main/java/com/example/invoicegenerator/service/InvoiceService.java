@@ -3,7 +3,9 @@ package com.example.invoicegenerator.service;
 import com.example.invoicegenerator.model.Invoice;
 
 
+import com.example.invoicegenerator.model.User;
 import com.example.invoicegenerator.persistence.InvoiceRepo;
+import com.example.invoicegenerator.persistence.UserRepo;
 import com.example.invoicegenerator.storage.InvoiceStorageManager;
 import com.example.invoicegenerator.util.InvoiceNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +13,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class InvoiceService {
 
     private final InvoiceRepo repo;
+    private final UserRepo userRepo;
 
     private final InvoiceStorageManager storageManager;
 
     @Autowired
-    public InvoiceService(InvoiceRepo repo, InvoiceStorageManager storageManager) {
+    public InvoiceService(InvoiceRepo repo, UserRepo userRepo, InvoiceStorageManager storageManager) {
         this.repo = repo;
+        this.userRepo = userRepo;
         this.storageManager = storageManager;
     }
 
-    public Invoice createInvoice(Invoice invoice) {
+    public Invoice createInvoice(Long id,Invoice invoice) {
 
         if (invoice == null) {
             throw new IllegalArgumentException("Invoice data must be not null");
@@ -39,8 +42,16 @@ public class InvoiceService {
                 String.valueOf(
                         Integer.parseInt(invoice.getPrice()) * Integer.parseInt(invoice.getQuantity())));
         invoice.setTotal(invoice.getAmount());
+        Optional<User> user = userRepo.findById(id);
+        invoice.setUser(user.get());
+
+        List<Invoice> invoices = user.get().getInvoices();
+        invoices.add(invoice);
+        user.get().setInvoices(invoices);
+
 
         //save to repo
+        userRepo.save(user.get());
         repo.save(invoice);
 
         this.storageManager.store(invoice);

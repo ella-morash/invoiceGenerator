@@ -17,10 +17,6 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping
-    public String hello() {
-        return "Hello World";
-    }
 
     @PostMapping(path = "/new")
     public User createUser(@RequestBody User user) {

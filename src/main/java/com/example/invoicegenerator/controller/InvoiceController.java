@@ -5,6 +5,8 @@ import com.example.invoicegenerator.service.InvoiceService;
 
 import com.example.invoicegenerator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,11 +25,10 @@ public class InvoiceController {
 
 
 
-    @PostMapping(path = "/invoice")
-    public Invoice createInvoice(@RequestBody Invoice invoice) {
-
-        return service.createInvoice(invoice);
-
+    @PostMapping(path = "/new/{id}")
+    public ResponseEntity<String> createInvoice(@PathVariable Long id, @RequestBody Invoice invoice) {
+        Invoice invoiceNew = service.createInvoice(id,invoice);
+        return new ResponseEntity<String>("Invoice with number:" + invoiceNew.getInvoiceNumber() + "has been created.", HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/invoice/{id}")

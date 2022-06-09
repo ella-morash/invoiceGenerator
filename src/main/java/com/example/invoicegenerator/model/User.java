@@ -18,6 +18,7 @@ public class User {
     @Column (name = "password")
     private String passWord;
     @OneToMany(mappedBy="user")
+    @Column
     private List<Invoice> invoices;
 
     public List<Invoice> getInvoices() {
