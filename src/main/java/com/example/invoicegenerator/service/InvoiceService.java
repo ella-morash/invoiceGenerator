@@ -42,6 +42,8 @@ public class InvoiceService {
                 String.valueOf(
                         Integer.parseInt(invoice.getPrice()) * Integer.parseInt(invoice.getQuantity())));
         invoice.setTotal(invoice.getAmount());
+
+
         Optional<User> user = userRepo.findById(id);
         invoice.setUser(user.get());
 
